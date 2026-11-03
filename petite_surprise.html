@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Et si on apprenait à se connaître ?</title>
+<style>
+:root{--bg:#fff7f8;--card:#fff;--ink:#34252b;--muted:#806d75;--pink:#d85b83;--pink2:#f7dce5;--line:#f0dce3}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at top,#ffe7ee 0,#fff7f8 48%,#fff 100%);font-family:Georgia,'Times New Roman',serif;color:var(--ink);display:grid;place-items:center;padding:22px}
+main{width:min(100%,520px)}.card{background:var(--card);border:1px solid var(--line);border-radius:25px;padding:clamp(24px,6vw,38px);box-shadow:0 16px 50px #9e53621a;text-align:center;min-height:390px;display:flex;flex-direction:column;justify-content:center}
+.heart{font-size:28px;margin-bottom:12px}.tag{font:600 11px Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:var(--pink);margin-bottom:14px}h1{font-size:clamp(27px,7vw,36px);line-height:1.15;margin:0 0 18px}p{font-size:17px;line-height:1.7;color:#59464e;margin:0 0 17px}.small{font:13px Arial,sans-serif;color:var(--muted)}.buttons{display:grid;gap:11px;margin-top:14px}button{border:0;border-radius:14px;padding:14px 18px;font:600 15px Arial,sans-serif;cursor:pointer;background:var(--pink);color:white;transition:.15s}button:hover{filter:brightness(.96);transform:translateY(-1px)}button.secondary{background:var(--pink2);color:#78394f}.progress{height:4px;background:#f5e8ed;border-radius:9px;margin:0 0 18px;overflow:hidden}.bar{height:100%;width:14%;background:var(--pink);transition:width .25s}.choices button{background:#fff5f8;color:#71394e;border:1px solid var(--line)}.choices button:hover{background:var(--pink2)}.footer{font:12px Arial,sans-serif;color:#9b8790;text-align:center;margin-top:14px}
+</style>
+</head>
+<body><main><div class="progress"><div class="bar" id="bar"></div></div><section class="card" id="card" aria-live="polite"></section><div class="footer">Une petite surprise, sans pression. ♡</div></main>
+<script>
+const card=document.getElementById('card'),bar=document.getElementById('bar');let step=0;
+const pages=[
+{tag:'Une petite surprise',title:'Et si on apprenait à se connaître ? ❤️',body:'J’avais envie de faire les choses un peu autrement. Rien de compliqué, juste quelques petites questions et quelques mots que je voulais te partager.',buttons:[['Je suis curieuse 👀',1]]},
+{tag:'Question 1',title:'Pour commencer…',body:'Tu es plutôt du genre à :',choices:['Parler pendant des heures 😂','Écouter et observer tranquillement','Un peu des deux, selon la personne']},
+{tag:'Question 2',title:'Petite question importante',body:'Qu’est-ce qui te plaît le plus quand tu apprends à connaître quelqu’un ?',choices:['Son humour','Sa façon de penser','Son attention et sa sincérité','La complicité qui se crée']},
+{tag:'Question 3',title:'Et maintenant, soyons honnêtes…',body:'Tu crois qu’une belle connexion peut commencer de façon inattendue ?',choices:['Oui, complètement ❤️','Peut-être bien 👀','Il faut laisser le temps faire les choses']},
+{tag:'Quelques mots',title:'Quelques mots que je ne veux pas garder pour moi…',body:'Bon, je vais essayer de ne pas faire un discours de trois heures. 😂<br><br>On ne se connaît pas depuis longtemps, à vrai dire, ça fait à peine un jour. Mais je trouve qu’il y a quelque chose d’assez intéressant dans le fait de rencontrer quelqu’un et d’avoir envie d’en découvrir davantage.<br><br>Je ne prétends pas déjà tout savoir sur toi. Justement, c’est aussi ce qui me plaît : il y a encore tellement de choses à découvrir.',buttons:[['Lire la suite',5]]},
+{tag:'Pourquoi cette surprise ?',title:'Pourquoi je fais tout ça ?',body:'Honnêtement, je pourrais simplement te dire que tu me plais, mais je pense qu’il y a un peu plus que ça.<br><br>J’aime cette envie que j’ai de découvrir qui tu es, d’apprendre tes petites habitudes, de connaître tes goûts et les petites choses qui te rendent différente.<br><br>Un jour ne suffit pas pour connaître quelqu’un, mais il peut suffire pour avoir envie de mieux le connaître.<br><br>Je fais tout ça parce que tu as piqué ma curiosité et que j’ai envie de tenter quelque chose avec toi, sans précipiter les choses.',buttons:[['J’arrive à la question… 😭',6]]},
+{tag:'La question',title:'Alors…',body:'J’aimerais apprendre à te connaître davantage, partager des moments avec toi et voir ce que cette rencontre peut devenir.<br><br>Est-ce que tu accepterais de devenir ma petite amie ? ❤️',buttons:[['Oui, j’aimerais bien ❤️',7],['J’aimerais qu’on apprenne encore à se connaître',8],['Je préfère qu’on reste amis',9]]},
+{tag:'Ta réponse',title:'Tu viens de me faire plaisir. ❤️',body:'Alors, commençons doucement et apprenons à nous découvrir, sans pression. Je suis content d’avoir osé te poser la question.',buttons:[['Revoir depuis le début ↺',0]]},
+{tag:'Ta réponse',title:'Et c’est totalement correct. ❤️',body:'Je préfère qu’on prenne le temps de se connaître et que les choses se fassent naturellement. Merci d’avoir été honnête avec moi.',buttons:[['Revoir depuis le début ↺',0]]},
+{tag:'Ta réponse',title:'Merci de me l’avoir dit. ❤️',body:'Aucun souci, je respecte ce que tu ressens. Je voulais simplement être honnête avec toi.',buttons:[['Revoir depuis le début ↺',0]]}
+];
+function render(n){step=n;const p=pages[n];bar.style.width=((Math.min(n,6)+1)/7*100)+'%';let html=`<div class="heart">♡</div><div class="tag">${p.tag}</div><h1>${p.title}</h1><p>${p.body}</p>`;
+if(p.choices){html+='<div class="buttons choices">'+p.choices.map((c)=>`<button class="secondary" onclick="render(${n+1})">${c}</button>`).join('')+'</div>'}else if(p.buttons){html+='<div class="buttons">'+p.buttons.map(([label,next],i)=>`<button class="${i?'secondary':''}" onclick="render(${next})">${label}</button>`).join('')+'</div>'}
+card.innerHTML=html;window.scrollTo({top:0,behavior:'smooth'});}
+render(0);
+</script></body></html>
